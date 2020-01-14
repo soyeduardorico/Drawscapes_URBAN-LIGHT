@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+
+</head>
+
+
+<style>
+.container
+{
+    text-align:center;
+    width:auto;
+    height: 700px;
+}
+
+.centerwrapper
+{
+   margin: auto;
+   width: 1400px;
+}
+
+.square {
+    float: left;
+    width:700px;
+    height:700px;
+}
+
+</style>
+
+<body>
+    <br> </br>
+    <!-- Centered top menu with stages-->
+    <div class=container6>
+        <!--container centering items-->
+        <div class="row">
+            <div class="column" id="btn1" > </div>
+            <div class="column" id="btn2" > </div>
+            <div class="column" id="btn3" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn4" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn5" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn6" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn7" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn8" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn9" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn10" style="color: #4a4a4a;"> </div>
+        </div>
+    </div>
+
+    <!-- central layout-->
+ 
+            <div class="container">
+        <div class="centerwrapper">  
+
+            <div class="square"> <!-- left side slideshow-->
+              <div class="myLeftSlides fade">
+                <img id="image_left_1" width="700" height="700">
+              </div>
+
+              <div class="myLeftSlides fade">
+                <img id="image_left_2" width="700" height="700">
+              </div>
+
+              <div class="myLeftSlides fade">
+                <img id="image_left_3" width="700" height="700">
+              </div>
+
+              <div class="myLeftSlides fade">
+                <img id="image_left_4" width="700" height="700">
+              </div>
+
+              <div class="myLeftSlides fade">
+                <img id="image_left_5" width="700" height="700">
+              </div>
+
+              <div class="myLeftSlides fade">
+                <img id="image_left_6" width="700" height="700">
+              </div>
+          </div>
+
+            
+          <div class="square"> <!-- right side slideshow-->
+              <div class="myRightSlides fade">
+                <img id="image_right_1" width="700" height="700">
+              </div>
+
+              <div class="myRightSlides fade">
+                <img id="image_right_2" width="700" height="700">
+              </div>
+
+              <div class="myRightSlides fade">
+                <img id="image_right_3" width="700" height="700">
+              </div>
+
+              <div class="myRightSlides fade">
+                <img id="image_right_4" width="700" height="700">
+              </div>
+
+              <div class="myRightSlides fade">
+                <img id="image_right_5" width="700" height="700">
+              </div>
+
+              <div class="myRightSlides fade">
+                <img id="image_right_6" width="700" height="700">
+              </div>
+          </div>
+
+</div> 
+</div>
+            <!--overlay loader-->
+
+    <!-- full menus below  -->
+    <div class=container6><!--container centering items-->
+        <!-- Stage 3: PATHS -->
+        <div id="b1" class="containerTab" style="display:none;background:none">
+            <div class="row">
+                <div class="column_below" id="b3_1" onclick="plusSlides(-1)"> <img class = "lower_menu_button" id="image_previous" > </img> <br> PREVIOUS </div>
+                <div class="column_below" id="b3_2" onclick="plusSlides(1)"> <img class = "lower_menu_button" id="image_next"> </img> <br> NEXT </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+                <div class="column_below" > </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+</body>
+
+<script>  
+
+    //--------------------------------------------------------------------------
+    //brings titles into header buttons
+    //--------------------------------------------------------------------------
+    var element = document.getElementById("btn1");
+    element.innerHTML = title1;
+
+    var element = document.getElementById("btn2");
+    element.innerHTML = title2;
+
+    var element = document.getElementById("btn3");
+    element.innerHTML = title3;
+
+    var element = document.getElementById("btn4");
+    element.innerHTML = title4;
+
+    var element = document.getElementById("btn5");
+    element.innerHTML = title5;
+
+    var element = document.getElementById("btn6");
+    element.innerHTML = title6;
+
+    var element = document.getElementById("btn7");
+    element.innerHTML = title7;
+
+    var element = document.getElementById("btn8");
+    element.innerHTML = title8;
+
+    var element = document.getElementById("btn9");
+    element.innerHTML = title9;
+
+    var element = document.getElementById("btn10");
+    element.innerHTML = title10;
+
+
+
+$('html').css('background', color1); //sets background color
+
+openTab('b1')
+
+color_buttons_neutral() //turns all the rest of buttons to neutral color
+
+document.getElementById("btn1").style.background = color1; // colors button in stage color
+
+document.getElementById("image_next").src = "{{url_for ('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", "images/image_next.jpg");
+
+document.getElementById("image_previous").src = "{{url_for ('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", "images/image_previous.jpg");
+
+
+
+// left side slides
+image_left_1.src ="{{url_for ('static', filename='images/tips/Slide1.JPG') }}"
+document.getElementById("image_left_1").src ;
+
+image_left_2.src ="{{url_for ('static', filename='images/tips/Slide3.gif') }}"
+document.getElementById("image_left_2").src ;
+
+image_left_3.src ="{{url_for ('static', filename='images/tips/Slide5.JPG') }}"
+document.getElementById("image_left_3").src ;
+
+image_left_4.src ="{{url_for ('static', filename='images/tips/Slide7.JPG') }}"
+document.getElementById("image_left_4").src ;
+
+image_left_5.src ="{{url_for ('static', filename='images/tips/Slide9.JPG') }}"
+document.getElementById("image_left_5").src ;
+
+image_left_6.src ="{{url_for ('static', filename='images/tips/Slide11.JPG') }}"
+document.getElementById("image_left_6").src;
+
+
+
+
+// right side slides
+image_right_1.src ="{{url_for ('static', filename='images/tips/Slide2.JPG') }}"
+document.getElementById("image_right_1").src ;
+
+image_right_2.src ="{{url_for ('static', filename='images/tips/Slide4.JPG') }}"
+document.getElementById("image_right_2").src ;
+
+image_right_3.src ="{{url_for ('static', filename='images/tips/Slide6.JPG') }}"
+document.getElementById("image_right_3").src ;
+
+image_right_4.src ="{{url_for ('static', filename='images/tips/Slide8.JPG') }}"
+document.getElementById("image_right_4").src ;
+
+image_right_5.src ="{{url_for ('static', filename='images/tips/Slide10.JPG') }}"
+document.getElementById("image_right_5").src ;
+
+image_right_6.src ="{{url_for ('static', filename='images/tips/Slide12.JPG') }}"
+document.getElementById("image_right_6").src;
+
+
+var slideLeftIndex = 1;
+var slideRightIndex = 1;
+showLeftSlides(slideLeftIndex);
+showRightSlides(slideRightIndex);
+
+function plusSlides(n) {
+  showLeftSlides(slideLeftIndex += n);
+  showRightSlides(slideRightIndex += n);
+}
+
+function currentSlide(n) {
+  showLeftSlides(slideLeftIndex = n);
+  showRightSlides(slideRightIndex = n);
+}
+
+function showLeftSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("myLeftSlides");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideLeftIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+    }
+  slides[slideLeftIndex-1].style.display = "block";  
+}
+
+
+function showRightSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("myRightSlides");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideRightIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+    }
+  slides[slideRightIndex-1].style.display = "block";  
+}
+
+
+
+    //--------------------------------------------------------------------------
+    //functinality for header buttons
+    //--------------------------------------------------------------------------
+    $(document).ready(function() {
+        $("#btn1").on("click", function() {
+            color_buttons_neutral() //turns all the rest of buttons to neutral color
+            document.getElementById("btn1").style.background = color1; // colors button in stage color
+            openTab('b1')
+        });
+    });
+
+    $(document).ready(function() {
+        $("#btn2").on("click", function() {
+            color_buttons_neutral() //turns all the rest of buttons to neutral color
+            document.getElementById("btn2").style.background = color1; // colors button in stage color
+            window.location.replace("{{url_for ('drawscapes') }}")
+        });
+    });
+
+
+</script>
+</html>
+
+<!--Useful Sources
+For color choice: 
+    https://www.google.com/search?q=color+picker
+For dynamic rescaling of entire webpage on mobile devices (initial lines):
+    https://css-tricks.com/snippets/html/responsive-meta-tag/ 
+For quick html formatting in order to make it easier to follow:
+    https://htmlformatter.com/
+For GIF generation
+    https://ezgif.com/maker
+-->
+

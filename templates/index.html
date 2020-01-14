@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html style="background: rgb(29, 41, 82);">
+<head>
+  <title></title>
+</head>
+
+</html>>
+<head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+</head>
+
+<body>
+<div class="slideshow-container">
+  <div class="mySlides fade">
+    <img id="image1" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image2" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image3" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image4" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image5" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image6" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image7" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image8" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image9" style="width:100%">
+  </div>
+
+  <div class="mySlides fade">
+    <img id="image10" style="width:100%">
+  </div>
+
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+
+<br>
+
+<div  class="slideshow-container">              
+  <a href="{{ url_for('drawscapes_intro') }}"> 
+    <button id = "draw_your_park"  class="btn" style="width:700px">
+     Skip slideshow and draw UCL EAST!
+    </button>
+  </a>
+</div>
+
+<script>
+
+image1.src ="{{url_for ('static', filename='images/slideshow/Slide1.JPG') }}"
+document.getElementById("image1").src = image1.src;
+
+image2.src ="{{url_for ('static', filename='images/slideshow/Slide2.JPG') }}"
+document.getElementById("image2").src = image2.src;
+
+image3.src ="{{url_for ('static', filename='images/slideshow/Slide3.JPG') }}"
+document.getElementById("image3").src = image3.src;
+
+image4.src ="{{url_for ('static', filename='images/slideshow/Slide4.JPG') }}"
+document.getElementById("image4").src = image4.src;
+
+image5.src ="{{url_for ('static', filename='images/slideshow/Slide5.JPG') }}"
+document.getElementById("image5").src = image5.src;
+
+image6.src ="{{url_for ('static', filename='images/slideshow/Slide6.gif') }}"
+document.getElementById("image6").src = image6.src;
+
+image7.src ="{{url_for ('static', filename='images/slideshow/Slide7.gif') }}"
+document.getElementById("image7").src = image7.src;
+
+image8.src ="{{url_for ('static', filename='images/slideshow/Slide8.gif') }}"
+document.getElementById("image8").src = image8.src;
+
+image9.src ="{{url_for ('static', filename='images/slideshow/Slide9.JPG') }}"
+document.getElementById("image9").src = image9.src;
+
+image10.src ="{{url_for ('static', filename='images/slideshow/Slide10.JPG') }}"
+document.getElementById("image10").src = image10.src;
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function moveOn(){
+  window.location.replace("{{url_for ('drawscapes_intro') }}");
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {moveOn()}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  slides[slideIndex-1].style.display = "block";  
+}
+
+</script>
+
+</body>
+</html> 

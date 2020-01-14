@@ -1,0 +1,387 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+canvas{
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+h1 {
+  color: #c5d3e8;
+  font-family: Calibri;
+  font-weight: bold;
+  font-size: 53px;
+  text-align: center;
+  vertical-align: middle  ;
+}
+
+h2 {
+  color: #c5d3e8;
+  font-family: Calibri;
+  font-size: 25px;
+  text-align: center;
+}
+
+p {
+  color: black;
+  font-family: Calibri;
+  font-size: 15px;
+  text-align: center;
+}
+
+/*  --------------------------------------------------------------------  */
+/* Equal columns that floats next to each other */
+/*  --------------------------------------------------------------------  */
+
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width:141px;
+  height:90px;
+  padding-top: 12px;
+  padding-right: 17px;
+  padding-bottom: 17px;
+  padding-left: 17px;
+  text-align: center;
+  font-size: 17px;
+  cursor: pointer;
+  color: white;
+  border: 1px solid grey;
+}
+
+.column_below {
+  float: left;
+  width:141px;
+  height:90px;
+  padding: 0px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;   
+}
+
+/*  --------------------------------------------------------------------  */
+/*  Tabs appearing below  */
+/*  --------------------------------------------------------------------  */
+.containerTab {
+  color: white;
+}
+
+#myText1
+    {
+     font-size:10pt;
+     height:30px;
+     width:670px;
+}
+
+
+/*  --------------------------------------------------------------------  */
+/*  Buttons (needs cleaning and removing some)  */
+/*  --------------------------------------------------------------------  */
+button {
+    display: inline-block;
+    height: 136px;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    width: 136px;
+}
+
+.btn {
+    background-color: black;
+    border: none;
+    color: #c5d3e8;
+    font-family: Calibri;
+    font-size: 25px;
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+.lower_menu_button{
+  width:80px;
+  height:80px;
+}
+
+ .btn:hover {
+    background-color: grey;
+}
+
+/*  --------------------------------------------------------------------  */
+/* container for centered elements */
+/*  --------------------------------------------------------------------  */
+div.container6 {
+display: flex;
+align-items: center;
+justify-content: center }
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Closable button inside the container tab */
+.closebtn {
+  float: right;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+/*  --------------------------------------------------------------------  */
+/* Loader element to show progress */
+/*  --------------------------------------------------------------------  */
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid black;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+#overlay{
+    position: absolute;
+    top:0px;
+    left:0px;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: .5;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/*  --------------------------------------------------------------------  */
+/* Collapsible buttons */
+/*  --------------------------------------------------------------------  */
+.central-container {
+  max-width: 1400px;
+  position: relative;
+  margin: auto;
+}
+
+.collapsible {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  width: 1400px;
+  border: white;
+  text-align: center;
+  outline: none;
+  font-size: 20px;
+  position: relative;
+  margin: auto;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: color1;
+}
+
+
+/*  --------------------------------------------------------------------  */
+/*  definition for popup  */
+/*  --------------------------------------------------------------------  */
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 330px;
+  background-color: #090e1f;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 25%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+
+/*  --------------------------------------------------------------------  */
+/*  definition for slideshow  */
+/*  --------------------------------------------------------------------  */
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 700px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0.8,0.8,0.8,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: 'grey';
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+.btn {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 3px 3px;
+    font-size: 18px;
+    cursor: pointer;
+
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}

@@ -1,0 +1,168 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <base target="_top">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
+</head>
+
+<body>
+
+
+ <br> </br>
+    <!-- Centered top menu with stages-->
+    <div class=container6>
+        <!--container centering items-->
+        <div class="row">
+            <div class="column" id="btn1" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn2" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn3" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn4" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn5" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn6" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn7" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn8"> </div>
+            <div class="column" id="btn9"style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn10" style="color: #4a4a4a;"> </div>
+        </div>
+    </div>
+
+    <div class="central-container">
+        <div>
+            <h2 style = "text-align: left;"> 
+                Please let us know if there is a aspect you would like to add to your design... <br>
+                ... or anything you would like amend  </h2>
+            <form action="">
+                <input 
+                    id = "myText1"
+                    type="text" 
+                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
+            </form>
+            <p>  <br> <br> </p>
+        </div>
+
+        <div>
+            <h2 style = "text-align: left;"> 
+                Please let us know which part of UCL do you work / research / study  </h2>
+            <form action="">
+                <input 
+                    id = "myText2"
+                    type="text" 
+                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
+            </form>
+            <p>  <br> <br> </p>
+        </div>
+
+        <div>
+            <h2 style = "text-align: left;"> 
+                If you want to know about the end result of the experiment  <br>
+                you can leave us your email in the box below <br>
+
+                 </h2>
+            <form action="">
+                <input 
+                    id = "myText3"
+                    type="text" 
+                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
+            </form>
+            
+            <h2 style = "text-align: left;">
+                We will send you information about overall results carried out throughout UCL <br>
+                This information will be anonymous and will not include any personal information <br>
+                <br>
+                Please note that your email address will NOT BE USED IN ANY DATA ANALYSIS AND WILL REMAIN STRICTLY CONFIDENTIAL <br>
+                and will only serve the purpose of allowing you to understand more about the collective decisions <br>
+                of UCL staff and students over the future of their campus <br>
+                <br> 
+            </h2>
+        </div>
+
+        <div class="item5">
+            <button id="btn-save" style = "height: 84; width: 84; "><img  src="{{url_for ('static', filename='images/save.jpg')}}" width="80" height="80"></button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    $(document).ready(function() {
+        $('html').css('background', color1);
+    });
+
+    //--------------------------------------------------------------------------
+    //brings titles into header buttons
+    //--------------------------------------------------------------------------
+    var element = document.getElementById("btn1");
+    element.innerHTML = title1;
+
+    var element = document.getElementById("btn2");
+    element.innerHTML = title2;
+
+    var element = document.getElementById("btn3");
+    element.innerHTML = title3;
+
+    var element = document.getElementById("btn4");
+    element.innerHTML = title4;
+
+    var element = document.getElementById("btn5");
+    element.innerHTML = title5;
+
+    var element = document.getElementById("btn6");
+    element.innerHTML = title6;
+
+    var element = document.getElementById("btn7");
+    element.innerHTML = title7;
+
+    var element = document.getElementById("btn8");
+    element.innerHTML = title8;
+
+    var element = document.getElementById("btn9");
+    element.innerHTML = title9;
+
+    var element = document.getElementById("btn10");
+    element.innerHTML = title10;
+
+
+    //--------------------------------------------------------------------------
+    //Sets up colors and buttons
+    //--------------------------------------------------------------------------
+    color_buttons_neutral() //turns all the rest of buttons to neutral color
+    document.getElementById("btn8").style.background = color1; // colors 
+
+    //--------------------------------------------------------------------------
+    //functinality for header buttons
+    //--------------------------------------------------------------------------
+    $(document).ready(function() {
+        $("#btn-save").on("click", function() {
+            mySaveText();
+        });
+        $('html').css('background', color1);
+    });
+
+
+    function mySaveText() {
+        var myText = new Array();
+        var myText1 = document.getElementById("myText1").value
+        var myText2 = document.getElementById("myText2").value
+        var myText3 = document.getElementById("myText3").value
+        //gets text information
+        myText.push(myText1)
+        myText.push(myText2)
+        myText.push(myText3)
+        var js_data = JSON.stringify(myText);
+        console.log(myText)
+        $.ajax({
+            url: '/drawscapes_save_text',
+            type: 'post',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: js_data
+        }).done(window.location.replace("{{url_for ('drawscapes_thanks') }}"));
+    }
+
+</script>
+
+</html>
