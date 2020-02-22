@@ -6,76 +6,178 @@
 </head>
 
 </html>>
+
 <head>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
     <base target="_top">
-    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
+
+
+<br> </br>
+<!-- Centered top menu with stages-->
+<div class=container6>
+    <div class="row">
+        <div class="column" id="btn1" > </div>
+        <div class="column" id="btn2" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn3" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn4" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn5" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn6" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn7" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn8" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn9" style="color: #4a4a4a;"> </div>
+        <div class="column" id="btn10" style="color: #4a4a4a;"> </div>
+    </div>
+</div>
+
+
+<!-- Slideshow container centered-->
 <div class="slideshow-container">
   <div class="mySlides fade">
-    <img id="image1" style="width:100%">
+    <div class="tooltip">
+      <img id="image1" style="width:1400px"></img>
+        <span class="tooltiptext" style = "bottom: 50%; opacity:100%">
+          <img id="imagezoom" style="width:97%"> </img>
+          <br>
+          <br>  Click "Crtl" + scroll mouse to "zoom out" <br> 
+          <br>  or use the browser zoom controls <br> 
+          <br>  until you can see the entire webpage <br>
+    </div>
   </div>
 
   <div class="mySlides fade">
-    <img id="image2" style="width:100%">
+    <img id="image2" style="width:1400px"> </img>
   </div>
 
   <div class="mySlides fade">
-    <img id="image3" style="width:100%">
+    <img id="image3" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image4" style="width:100%">
+    <img id="image4" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image5" style="width:100%">
+    <img id="image5" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image6" style="width:100%">
+    <img id="image6" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image7" style="width:100%">
+    <img id="image7" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image8" style="width:100%">
+    <img id="image8" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image9" style="width:100%">
+    <img id="image9" style="width:1400px">
   </div>
 
   <div class="mySlides fade">
-    <img id="image10" style="width:100%">
+    <img id="image10" style="width:1400px">
   </div>
 
   <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
 </div>
 
 <br>
 
-<div  class="slideshow-container">              
-  <a href="{{ url_for('drawscapes_intro') }}"> 
-    <button id = "draw_your_park"  class="btn" style="width:700px">
-     Skip slideshow and draw UCL EAST!
-    </button>
-  </a>
+<!-- DROPDOWN MENU -->
+<div  class="slideshow-container"> 
+  <div class="dropdown">
+    <button onclick="myDropdownFunction()" class="dropbtn">When ready CLICK HERE to indicate your faculty and move on</button>
+    <div id="myDropdown"  class="dropdown-content">
+      <a onclick =  "moveOn('Bartlett (Built Environment)')" >Bartlett (Built Environment)</a>
+      <a onclick =  "moveOn('Brain Sciences')" > Brain Sciences </a>
+      <a onclick =  "moveOn('Engineering Sciences')" > Engineering Sciences </a>
+      <a onclick =  "moveOn('Institute of Education')" > Institute of Education </a>
+      <a onclick =  "moveOn('Laws')" > Laws </a>
+      <a onclick =  "moveOn('Life Sciences')" > Life Sciences </a>
+      <a onclick =  "moveOn('Mathematical & Physical Sciences')" > Mathematical & Physical Sciences </a>
+      <a onclick =  "moveOn('Medical Sciences')" > Medical Sciences </a>
+      <a onclick =  "moveOn('Population Health Sciences')" > Population Health Sciences </a>
+      <a onclick =  "moveOn('Social & Historical Sciences')" > Social & Historical Sciences </a>
+      <a onclick =  "moveOn('Other')" > Other </a>
+    </div>
+  </div>
+</div>
+
+<div class="central-container">
+  <p style = "text-align: left;">
+    Drawscapes is a EPSRC funded research project carried by Eduardo Rico in the Bartlett School of Architecture. The proposed project for UCL EAST is a theoretical exercise with the aim of learning about processes of online collaborative design. Public participation and consultation for UCL EAST project has already taken place and their results can be consulted in www.ucl.ac.uk/ucl-east
+    </p>
 </div>
 
 <script>
 
-image1.src ="{{url_for ('static', filename='images/slideshow/Slide1.JPG') }}"
+//--------------------------------------------------------------------------
+//brings titles into header buttons
+//--------------------------------------------------------------------------
+var element = document.getElementById("btn1");
+element.innerHTML = title1;
+
+var element = document.getElementById("btn2");
+element.innerHTML = title2;
+
+var element = document.getElementById("btn3");
+element.innerHTML = title3;
+
+var element = document.getElementById("btn4");
+element.innerHTML = title4;
+
+var element = document.getElementById("btn5");
+element.innerHTML = title5;
+
+var element = document.getElementById("btn6");
+element.innerHTML = title6;
+
+var element = document.getElementById("btn7");
+element.innerHTML = title7;
+
+var element = document.getElementById("btn8");
+element.innerHTML = title8;
+
+var element = document.getElementById("btn9");
+element.innerHTML = title9;
+
+var element = document.getElementById("btn10");
+element.innerHTML = title10;
+
+
+//--------------------------------------------------------------------------
+//sets basics colors 
+//--------------------------------------------------------------------------
+$('html').css('background', color1); //sets background color
+
+color_buttons_neutral() //turns all the rest of buttons to neutral color
+
+document.getElementById("btn1").style.background = color1; // colors button in stage color
+
+
+//--------------------------------------------------------------------------
+// rescales content in screen to viewport in mobile devices
+//-------------------------------------------------------------------------- 
+AutoViewport.setDimensions(1450, 900);    
+    
+//--------------------------------------------------------------------------
+// Loads the images for the slideshow
+//-------------------------------------------------------------------------- 
+image1.src ="{{url_for ('static', filename='images/slideshow/Slide1.gif') }}"
 document.getElementById("image1").src = image1.src;
 
 image2.src ="{{url_for ('static', filename='images/slideshow/Slide2.JPG') }}"
@@ -87,7 +189,7 @@ document.getElementById("image3").src = image3.src;
 image4.src ="{{url_for ('static', filename='images/slideshow/Slide4.JPG') }}"
 document.getElementById("image4").src = image4.src;
 
-image5.src ="{{url_for ('static', filename='images/slideshow/Slide5.JPG') }}"
+image5.src ="{{url_for ('static', filename='images/slideshow/Slide5.gif') }}"
 document.getElementById("image5").src = image5.src;
 
 image6.src ="{{url_for ('static', filename='images/slideshow/Slide6.gif') }}"
@@ -96,7 +198,7 @@ document.getElementById("image6").src = image6.src;
 image7.src ="{{url_for ('static', filename='images/slideshow/Slide7.gif') }}"
 document.getElementById("image7").src = image7.src;
 
-image8.src ="{{url_for ('static', filename='images/slideshow/Slide8.gif') }}"
+image8.src ="{{url_for ('static', filename='images/slideshow/Slide8.JPG') }}"
 document.getElementById("image8").src = image8.src;
 
 image9.src ="{{url_for ('static', filename='images/slideshow/Slide9.JPG') }}"
@@ -104,6 +206,9 @@ document.getElementById("image9").src = image9.src;
 
 image10.src ="{{url_for ('static', filename='images/slideshow/Slide10.JPG') }}"
 document.getElementById("image10").src = image10.src;
+
+imagezoom.src ="{{url_for ('static', filename='images/zoom.JPG') }}"
+document.getElementById("imagezoom").src = imagezoom.src;
 
 var slideIndex = 1;
 showSlides(slideIndex);
@@ -120,21 +225,71 @@ function currentSlide(n) {
   showSlides(slideIndex = n);
 }
 
-function moveOn(){
-  window.location.replace("{{url_for ('drawscapes_intro') }}");
-}
 
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
   var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {moveOn()}    
+  if (n > slides.length) {slideIndex = slides.length}   
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";  
   }
   slides[slideIndex-1].style.display = "block";  
 }
+
+
+//--------------------------------------------------------------------------
+// functionality for dropdown
+//-------------------------------------------------------------------------- 
+// When the user clicks on the button,toggle between hiding and showing the dropdown content */
+function myDropdownFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+//--------------------------------------------------------------------------
+// Saves option and moves to next page 
+//-------------------------------------------------------------------------- 
+function moveOn(faculty_name){
+
+  var js_data = JSON.stringify(faculty_name);
+
+  $.ajax({
+      url: '/drawscapes_save_initial_text',
+      type: 'post',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: js_data
+  }).done(function(result) {
+
+      window.location.replace("{{url_for ('drawscapes') }}");
+  })
+}
+
+
+//--------------------------------------------------------------------------
+// Saves option and moves to next page 
+//-------------------------------------------------------------------------- 
+function moveOn2(){
+window.location.replace("{{url_for ('drawscapes') }}");
+}
+
+
 
 </script>
 

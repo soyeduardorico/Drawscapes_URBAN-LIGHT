@@ -5,6 +5,7 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>           
     <base target="_top">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
@@ -19,9 +20,9 @@
         <!--container centering items-->
         <div class="row">
             <div class="column" id="btn1" style="color: #4a4a4a;"> </div>
-            <div class="column" id="btn2" style="color: #4a4a4a;"> </div>
+            <div class="column" id="btn2" onclick="myBackToPaths()"> </div>
             <div class="column" id="btn3" style="color: #4a4a4a;"> </div>
-            <div class="column" id="btn4" onclick="openTab('b4');"> </div>
+            <div class="column" id="btn4" onclick="openTab('b4')"> </div>
             <div class="column" id="btn5" onclick="myPassDataMassingCalc(4)"> </div>
             <div class="column" id="btn6" onclick="myPassLandscape(4)"> </div>
             <div class="column" id="btn7" style="color: #4a4a4a;"> </div>
@@ -34,14 +35,24 @@
     <!-- central layout-->
     <div class="central-layout">
         <div role="group" class="btn-group" style="text-align:center">
-            <canvas id="canvas" width="700" height="700"> </canvas>
             <!-- drawing canvas on the left-->
-            <img id="feedback" width="700" height="700"> </img>
+            <canvas id="canvas" width="700" height="700"> </canvas>
+            
             <!--feedback area on the right-->
+            <div class="tooltip">
+                <img id="feedback" width="700" height="700"> 
+                    <span class="tooltiptext">
+                        <br> Try to hit the target 134,700m2 built <br> 
+                        <br> Residential is typically located in towers and research to bases and plinths <br>
+                        <br> Think on landscape value of canals and connections to public transport when locating buildings <br>
+                    </span>
+                </img>
+            </div> 
+            <!--overlay loader-->
             <div id="overlay">
                 <div id="ldr" class="loader"> </div>
             </div>
-            <!--overlay loader-->
+            
         </div>
     </div>
 
@@ -52,16 +63,16 @@
         <!-- Stage 4: DRAW BUILDINGS -->
         <div id="b4" class="containerTab" style="display:none;background:none">
             <div class="row">
-                <div class="column_below" id="b4_1" onclick="myUnDo(1);"> <img id="undo" width="80" height="80"> </img> <br> UNDO </div>
-                <div class="column_below" id="b4_2" onclick="newCanvasStroke(1);"> <img id="draw_low" width="80" height="80"> </img> <br> BASE </div>
-                <div class="column_below" id="b4_3" onclick="newCanvasStroke(2);">  <img id="draw_medium" width="80" height="80"> </img> <br> PLYNTH </div>
-                <div class="column_below" id="b4_4" onclick="newCanvasStroke(3);">  <img id="draw_high" width="80" height="80"> </img> <br> TOWER </div>
+                <div class="column_below" id="b4_1" onclick="myUnDo(1);newCanvasStroke(1)"> <img id="undo" width="80" height="80"> </img> <br> UNDO </div>
+                <div class="column_below" id="b4_2" onclick="newCanvasStroke(1);"> <img id="draw_low" width="80" height="80"> </img> <br> 2 STOREY </div>
+                <div class="column_below" id="b4_3" onclick="newCanvasStroke(2);">  <img id="draw_medium" width="80" height="80"> </img> <br> 5 STOREY </div>
+                <div class="column_below" id="b4_4" onclick="newCanvasStroke(3);">  <img id="draw_high" width="80" height="80"> </img> <br> 10 STOREY </div>
                 <div class="column_below" id="b4_5" onclick="myPopFunction(pop1);"> 
                     <div class="popup">                    
                         <span class="popuptext" id="myPopup1">
-                            Try to hit the target, 50,000m2 overall <br> <br>
-                            Residential is typically located in towers and research to bases and plinths <br> <br>
-                            Think on landscape value of canals and connections to public transport when locating buildings <br>
+                            <br> Try to hit the target 134,700m2 built <br> 
+                            <br> Residential is typically located in towers and research to bases and plinths <br>
+                            <br> Think on landscape value of canals and connections to public transport when locating buildings <br>
                         </span> 
                         <img class = "lower_menu_button" id="tips"> </img> <br> TIPS 
                     </div>
@@ -79,6 +90,12 @@
 </body>
 
 <script>
+
+    //--------------------------------------------------------------------------
+    // rescales content in screen to viewport in mobile devices
+    //-------------------------------------------------------------------------- 
+    AutoViewport.setDimensions(1450, 900);    
+    
 
     //--------------------------------------------------------------------------
     //brings titles into header buttons
@@ -112,6 +129,7 @@
 
     var element = document.getElementById("btn10");
     element.innerHTML = title10;
+
 
     //--------------------------------------------------------------------------
     //imports images for canvas background, feedback screen and sets new canvas and colors buttons
@@ -170,10 +188,12 @@
     });
 
 
-    function myBack() {
+    //--------------------------------------------------------------------------
+    //GO back to draw buttons and backend communication
+    //--------------------------------------------------------------------------
+    function myBackToPaths() {
         window.location.replace("{{url_for ('drawscapes') }}");
     }
-
 
 
     //--------------------------------------------------------------------------

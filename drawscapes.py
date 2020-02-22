@@ -1,3 +1,4 @@
+
 # ----------------------------------------------------------------------------------
 # For running flask on pythonanywhere  see: https://www.youtube.com/watch?v=M-QRwEEZ9-8
 # For session generation see https://www.youtube.com/watch?v=T1ZVyY1LWOg
@@ -65,6 +66,7 @@ def dropsession():
     session.pop('user', None)
     return 'Dropped'
 
+
 # -----------------------------------------------------------------------------------------
 # fabricates a url for non static folder a seen in https://www.youtube.com/watch?v=Y2fMCxLz6wM
 # -----------------------------------------------------------------------------------------
@@ -72,6 +74,7 @@ def dropsession():
 def data(filename):
     target_directory = 'data/' + session['user']
     return send_from_directory(target_directory, filename)
+
 
 @app.route('/overall_results/<filename>')
 def overall_results(filename):
@@ -233,6 +236,9 @@ def drawscapes_massing_feedback():
     return jsonify(image_feedback)
 
 
+# -----------------------------------------------------------------------------------------
+# Generates an image for drawing land uses on top
+# -----------------------------------------------------------------------------------------
 @app.route('/drawscapes_land_use_base', methods=["GET", "POST"])
 def drawscapes_land_use_base():
     # defines drawing number within the session
@@ -313,6 +319,31 @@ def drawscapes_save_land_uses():
     return jsonify(file_name)
 
 
+
+
+# -----------------------------------------------------------------------------------------
+# Saves survey resultsfrom index.html into databases and drops session
+# -----------------------------------------------------------------------------------------
+@app.route('/drawscapes_save_initial_text', methods=["GET", "POST"])
+def drawscapes_save_initial_text():
+    session_folder=os.path.join(root_data, session['user']) # uses same folder as folder session
+    user_id= session['user']
+    file_name= user_id +'_'+ str(millis)
+    file_path = os.path.join(session_folder, file_name + '.txt')
+
+    # ----------------------------------------------------------------------------------
+    # brings json data and calls drawing feedback.
+    # ----------------------------------------------------------------------------------
+    data = request.json
+    data=str(data) # just in case
+    title_id = 'faculty'
+    daf.save_survey_results (data, session_folder, file_name, user_id, title_id)
+
+    return jsonify(file_name)
+
+# -----------------------------------------------------------------------------------------
+# Saves survey resultsfrom  drawscapes_form.html into databases and drops session
+# -----------------------------------------------------------------------------------------
 @app.route('/drawscapes_save_text', methods=["GET", "POST"])
 def drawscapes_save_text():
     session_folder=os.path.join(root_data, session['user']) # uses same folder as folder session
@@ -325,7 +356,8 @@ def drawscapes_save_text():
     # ----------------------------------------------------------------------------------
     data = request.json
     data=str(data) # just in case
-    daf.save_survey_results (data, session_folder, file_name, user_id)
+    title_id = 'survey_results'
+    daf.save_survey_results (data, session_folder, file_name, user_id, title_id)
 
     dropsession()
 

@@ -33,14 +33,14 @@ var color_generic = '#000000';
 //----------------------------------------------------------------------------------------------
 //file paths for images and titles for header buttons
 //----------------------------------------------------------------------------------------------
-Screen_01_left = "images/screens/Slide1.jpg"
-Screen_01_right = "images/screens/Slide2.jpg"
+// Screen_01_left = "images/screens/Slide1.jpg"
+// Screen_01_right = "images/screens/Slide2.jpg"
 
-Screen_02_left = "images/screens/Slide3.jpg"
-Screen_02_right = "images/tips.gif"
+// Screen_02_left = "images/screens/Slide3.jpg"
+// Screen_02_right = "images/tips.gif"
 
-Screen_03_left = "images/base_for_canvas.jpg"
-Screen_03_right = "images/base_image_large_annotated.jpg"
+// Screen_03_left = "images/base_for_canvas.jpg"
+// Screen_03_right = "images/base_image_large_annotated.jpg"
 draw_massing_instructions = "images/draw_massing_instructions.jpg"
 draw_land_use_instructions = "images/draw_land_use_instructions.jpg"
 basename = "images/base_image.jpg"
@@ -60,7 +60,7 @@ var pop5 = "myPopup5"
 //----------------------------------------------------------------------------------------------
 //titles for header buttons
 //----------------------------------------------------------------------------------------------
-title1 = '1 <br> some tips'
+title1 = '1 <br> intro'
 title2 = '2 <br> draw paths'
 title3 = '3 <br> check lines'
 title4 = '4 <br> draw buildings'
@@ -184,10 +184,8 @@ function myUnDo (default_thickness){
       }
     }
 
-    console.log(n_lines);
-    console.log(point.length);
 
-    if (n_lines>1){
+    if (n_lines>0){
       if (n>2){
 
       while (point[n-1]>1) {
@@ -202,6 +200,7 @@ function myUnDo (default_thickness){
       ycoords.pop();
       point.pop();
       linetype.pop();
+
 
       // console.log(xcoords.length);
       // console.log(ycoords.length);
@@ -228,13 +227,12 @@ function myUnDo (default_thickness){
               ctx.lineTo(x,y);
               ctx.stroke();
           }
-
-          newCanvasStroke(default_thickness);
           i++
       }
 
     }
   }
+  newCanvasStroke(default_thickness);
 }
 
 
@@ -378,6 +376,8 @@ document.getElementById("canvas").addEventListener("mousedown", start, false);
 document.getElementById("canvas").addEventListener("mousemove", move, false);
 document.addEventListener("mouseup", stop, false);
 };
+
+
 
 
 

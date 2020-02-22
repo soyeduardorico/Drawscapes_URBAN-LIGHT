@@ -6,10 +6,11 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
     <base target="_top">
-    <meta name="viewport" content="width=device-width, initial-scale=0.3">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
@@ -144,7 +145,11 @@
 </body>
 
 <script>  
-
+    //--------------------------------------------------------------------------
+    // rescales content in screen to viewport in mobile devices
+    //-------------------------------------------------------------------------- 
+    AutoViewport.setDimensions(1450, 900);    
+    
     //--------------------------------------------------------------------------
     //brings titles into header buttons
     //--------------------------------------------------------------------------

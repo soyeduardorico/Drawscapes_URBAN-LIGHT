@@ -5,13 +5,14 @@ import math as m
 import os
 import cv2
 import numpy as np
+import skimage
 
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
 from project_data import link_base_image_large, thickness_lines, link_base_image_large_annotated
-from project_data import node_coords_large, large_scale_paths, overall_results_directory, shape_x, shape_y
+from project_data import overall_results_directory, shape_x, shape_y
 
 import project_data as pdt
 
@@ -22,7 +23,7 @@ import project_data as pdt
 # ------------------------------------------------------------------------------------
 class path_graph ():
     def __init__(self, array, node_coords, threshold, sketch_name,dir_write, folder_name, link_base_image,shape_x,shape_y):
-        self.array=array
+        self.array=array * self.node_mask()
         self.node_coords=node_coords
         self.threshold=threshold
         self.sketch_name=sketch_name
@@ -42,7 +43,22 @@ class path_graph ():
             self.nodes_bridge.append(i[0]+self.shape_x*i[1])
 
     # ------------------------------------------------------------------------------------
+    # returns a mask for nodes at radious =0.75 * threshold to ensure graph stops at nodes
+    # ------------------------------------------------------------------------------------
+    def node_mask (self):
+        node_mask_base = np.zeros((int(pdt.shape_x),int(pdt.shape_y),3), np.uint8)
+        node_mask_base.fill(255)
+        mask_radius = int(0.75*pdt.threshold_distance)
+        for i in pdt.node_coords:
+            cv2.circle(node_mask_base,(i[0],i[1]),mask_radius,(0,0,0),-1)
+        node_mask_grey=skimage.img_as_ubyte(skimage.color.rgb2grey(node_mask_base))
+        node_mask_binary=node_mask_grey > 250
+        return node_mask_binary
+
+
+    # ------------------------------------------------------------------------------------
     # returns direct graph from the pixels where nodes are each pixel
+    # It receives a skeleton graph already fabricated
     # ------------------------------------------------------------------------------------
     def pixel_graph (self):
         A=self.array

@@ -4,6 +4,7 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>   
     <base target="_top">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
@@ -33,63 +34,58 @@
     <div class="central-container">
         <div>
             <h2 style = "text-align: left;">
-                Please let us know if there is a aspect you would like to add to your design... <br>
-                ... or anything you would like amend  </h2>
+                ANYTHING ELSE FOR UCL - EAST?</h2>
+
+            <p style = "text-align: left;"> 
+                Please let us know if there is a aspect you would like to add to your design </p>
+
             <form action="">
-                <input
+                <input 
                     id = "myText1"
-                    type="text"
-                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
+                    type="text" 
+                    style="width:400px; font-size:25px; font-family: Calibri;color: #1d2952;">
             </form>
             <p>  <br> <br> </p>
         </div>
 
+
         <div>
             <h2 style = "text-align: left;">
-                Please let us know which part of UCL do you work / research / study  </h2>
+                WOULD YOU LIKE TO SEE THE RESULTS OF COLLECTIVE DESIGN?</h2>
+
+            <p style = "text-align: left;"> 
+                If you want to know about the end result of the experiment you can leave us your email in the box below. We will send you information about overall results carried out throughout UCL. Please note that your email address will NOT BE USED IN ANY DATA ANALYSIS AND WILL REMAIN STRICTLY CONFIDENTIAL and will only serve the purpose of allowing you to understand more about the collective decisions of UCL staff and students over the future of their campus</p>
             <form action="">
-                <input
+                <input 
                     id = "myText2"
-                    type="text"
-                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
+                    type="text" 
+                    style="width:400px; font-size:25px; font-family: Calibri;color: #1d2952;">
             </form>
-            <p>  <br> <br> </p>
-        </div>
-
-        <div>
-            <h2 style = "text-align: left;">
-                Let us know what parts of Drawscapes webapp you would improve  </h2>
-            <form action="">
-                <input
-                    id = "myText3"
-                    type="text"
-                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
-            </form>
-            <p>  <br> <br> </p>
-        </div>
-
-        <div>
-            <h2 style = "text-align: left;">
-                If you want to know about the end result of the experiment  <br>
-                you can leave us your email in the box below <br>
-
-                 </h2>
-            <form action="">
-                <input
-                    id = "myText4"
-                    type="text"
-                    style="width:1400px; font-size:25px; font-family: Calibri;color: #1d2952;">
-            </form>
-
-            <h2 style = "text-align: left;">
-                We will send you information about overall results carried out throughout UCL <br>
-                This information will be anonymous and will not include any personal information <br>
+            
+            <p style = "text-align: left;">
+                LOCAL DATA PROTECTION PRIVACY NOTICE
                 <br>
-                Please note that your email address will NOT BE USED IN ANY DATA ANALYSIS AND WILL REMAIN STRICTLY CONFIDENTIAL <br>
-                and will only serve the purpose of allowing you to understand more about the collective decisions <br>
-                of UCL staff and students over the future of their campus <br>
                 <br>
-            </h2>
+                The controller for this project will be University College London (UCL). The UCL Data Protection Officer provides oversight of UCL activities involving the processing of personal data, and can be contacted at data-protection@ucl.ac.uk. 
+                <br>
+                <br>
+                This ‘local’ privacy notice sets out the information that applies to this particular study. Further information on how UCL uses participant information can be found in our ‘general’ privacy notice for participants in research studies (click here) 
+                <br>
+                <br>
+                The information that is required to be provided to participants under data protection legislation (GDPR and DPA 2018) is provided across both the ‘local’ and ‘general’ privacy notices. The categories of personal data used will be as follows: o UCL department where the participant works / studies 
+                Email address of those willing to receive further feedback form Drawscapes project 
+                <br>
+                <br>
+                The lawful basis that will be used to process your personal data are: ‘Public task’ for personal data and’ Research purposes’ for special category data.
+                <br>
+                <br>
+                Your personal data will be processed so long as it is required for the research project. If we are able to anonymise or pseudonymise the personal data you provide we will undertake this, and will endeavour to minimise the processing of personal data wherever possible. 
+                <br>
+                <br>
+                If you are concerned about how your personal data is being processed, or if you would like to contact us about your rights, please contact UCL in the first instance at data-protection@ucl.ac.uk
+
+                <br> 
+            </p>
         </div>
 
         <div class="item5">
@@ -100,6 +96,11 @@
 </body>
 
 <script>
+    //--------------------------------------------------------------------------
+    // rescales content in screen to viewport in mobile devices
+    //-------------------------------------------------------------------------- 
+    AutoViewport.setDimensions(1450, 900);    
+  
     $(document).ready(function() {
         $('html').css('background', color1);
     });
@@ -142,7 +143,7 @@
     //Sets up colors and buttons
     //--------------------------------------------------------------------------
     color_buttons_neutral() //turns all the rest of buttons to neutral color
-    document.getElementById("btn8").style.background = color1; // colors
+    document.getElementById("btn8").style.background = color1; // colors 
 
     //--------------------------------------------------------------------------
     //functinality for header buttons
@@ -159,13 +160,9 @@
         var myText = new Array();
         var myText1 = document.getElementById("myText1").value
         var myText2 = document.getElementById("myText2").value
-        var myText3 = document.getElementById("myText3").value
-        var myText4 = document.getElementById("myText3").value
         //gets text information
         myText.push(myText1)
         myText.push(myText2)
-        myText.push(myText3)
-        myText.push(myText4)
         var js_data = JSON.stringify(myText);
         console.log(myText)
         $.ajax({

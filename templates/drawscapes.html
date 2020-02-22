@@ -6,18 +6,18 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
     <base target="_top">
-    <meta name="viewport" content="width=device-width, initial-scale=0.2">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 
 <body>
     <br> </br>
     <!-- Centered top menu with stages-->
     <div class=container6>
-        <!--container centering items-->
         <div class="row">
             <div class="column" id="btn1" style="color: #4a4a4a;"> </div>
             <div class="column" id="btn2" > </div>
@@ -32,36 +32,52 @@
         </div>
     </div>
 
+
     <!-- central layout-->
     <div class="central-layout">
         <div role="group" class="btn-group" style="text-align:center">
-            <canvas id="canvas" width="700" height="700"> </canvas>
             <!-- drawing canvas on the left-->
-            <img id="feedback" width="700" height="700"> </img>
-            <!--feedback area on the right-->
+            <canvas id="canvas" width="700" height="700"> </canvas>
+                        
+            <!--feedback area on the right-->            
+            <div class="tooltip">
+              <img id="feedback" width="700" height="700"> </img>
+                <span class="tooltiptext">
+                    <br> Try to link at least two different nodes <br> 
+                    <br> Remember the barrier effect caused by the railway tracks <br>
+                    <br> Think of where public transport is located <br>
+                </span>
+            </div>
+
+            <!--overlay loader-->
             <div id="overlay">
                 <div id="ldr" class="loader"> </div>
             </div>
-            <!--overlay loader-->
         </div>
     </div>
 
-    <!-- full menus below  -->
-    <div class=container6><!--container centering items-->
+
+    <!-- buttons below  -->
+    <div class=container6>
         <!-- Stage 2: PATHS -->
         <div id="b2" class="containerTab" style="display:none;background:none">
             <div class="row">
-                <div class="column_below" id="b2_1" onclick="myUnDo(0);"> <img class = "lower_menu_button" id="undo"> </img> <br> UNDO </div>
+                <div class="column_below" id="b2_1" onclick="myUnDo(0);newCanvasStroke(0)"> 
+                    <img class = "lower_menu_button" id="undo"> </img> 
+                    <br> UNDO 
+                </div>
+                
                 <div class="column_below" id="b2_2" onclick="myPopFunction(pop1);">
                     <div class="popup">
                         <span class="popuptext" id="myPopup1">
-                            Try to link at least two different nodes <br> <br>
-                            Remember the barrier effect caused by the raiway tracks <br> <br>
-                            Think of where public transport is located <br>
+                            <br> Try to link at least two different nodes <br> 
+                            <br> Remember the barrier effect caused by the railway tracks <br>
+                            <br> Think of where public transport is located <br>
                         </span> 
                         <img class = "lower_menu_button" id="tips"> </img> <br> TIPS 
                     </div>
                 </div>
+
                 <div class="column_below" > </div>
                 <div class="column_below" > </div>
                 <div class="column_below" > </div>
@@ -73,11 +89,17 @@
             </div>
         </div>
     </div>
+
 
 </body>
 
 <script> 
 
+    //--------------------------------------------------------------------------
+    // rescales content in screen to viewport in mobile devices
+    //-------------------------------------------------------------------------- 
+    AutoViewport.setDimensions(1450, 900);    
+    
     
     //--------------------------------------------------------------------------
     //brings titles into header buttons
@@ -116,14 +138,14 @@
     //--------------------------------------------------------------------------
     //imports images for canvas background, feedback screen and sets new canvas and colors buttons
     //--------------------------------------------------------------------------
-    image_canvas.src = "{{url_for ('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", Screen_03_left);
+    image_canvas.src = "{{url_for ('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", "images/base_image.jpg");
     ctx = document.getElementById('canvas').getContext("2d"); //imports data from previosly defined canvas
     document.addEventListener("load", newWhiteCanvas(0)); //Initializes canvas when background image is ready 
     image_canvas.onload = function() {
         openTab('b2')
         color_buttons_neutral() //turns all the rest of buttons to neutral color
         document.getElementById("btn2").style.background = color1; // colors button in stage color
-        image_video.src = "{{url_for ('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", Screen_03_right);
+        image_video.src = "{{url_for ('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", "images/base_image_large_annotated.jpg");
         document.getElementById("feedback").src = image_video.src;
         $('html').css('background', color1);
         newcanvas(image_canvas, 1, 0);
@@ -176,7 +198,7 @@
     //functinality for backend communication
     //--------------------------------------------------------------------------
     function myPassDataConnectivity(declared_style) {
-        var list_pass = mySave(declared_style)        
+        var list_pass = mySave(declared_style)
         if (list_pass[1].length > 1){ //checks that w are not passing a null array for evaluation
             var js_data = JSON.stringify(list_pass);
             document.getElementById("overlay").style.visibility = "visible";
@@ -235,21 +257,105 @@
         }
     }
 
+function myUnDo (default_thickness){
+    // console.log(xcoords.length);
+    // console.log(ycoords.length);
+    // console.log(point.length);
+    // console.log(linetype.length);
+
+    n_lines=0
+    n = point.length;
+
+    for (j = 0; j < n; j++) {
+      if (point[j]<2){
+        n_lines++
+      }
+    }
+
+    console.log(n_lines);
+    console.log(n_lines);
+    console.log(point.length);
+
+    if (n_lines>0){
+      if (n>2){
+
+      while (point[n-1]>1) {
+          xcoords.pop();
+          ycoords.pop();
+          point.pop();
+          linetype.pop();
+          n--
+      }
+
+      xcoords.pop();
+      ycoords.pop();
+      point.pop();
+      linetype.pop();
+
+      // console.log(xcoords.length);
+      // console.log(ycoords.length);
+      // console.log(point.length);
+      // console.log(linetype.length);
+
+      // redraw the canvas again with lines left
+      newcanvas(image_canvas,1);
+      n2 = xcoords.length;
+      i=0
+      while (i<n2){
+          if (point[i] < 2){
+              ctx.beginPath();
+              x=xcoords[i]
+              y=ycoords[i]
+              ctx.moveTo(x,y);
+          }
+
+          if (point[i] > 2){
+              x=xcoords[i]
+              y=ycoords[i]
+              ctx.strokeStyle = color_canvas_scheme[linetype[i]];
+              ctx.lineWidth = thickness_canvas_scheme[linetype[i]];
+              ctx.lineTo(x,y);
+              ctx.stroke();
+          }
+
+          newCanvasStroke(default_thickness);
+          i++
+      }
+
+    }
+  }
+}
+
+
 </script>
 
 </html>
+
 <!--Useful Sources
-For color choice: 
+Color choice: 
     https://www.google.com/search?q=color+picker
-For dynamic rescaling of entire webpage on mobile devices (initial lines):
+
+Dynamic rescaling of entire webpage on mobile devices (initial lines):
     https://css-tricks.com/snippets/html/responsive-meta-tag/ 
-For quick html formatting in order to make it easier to follow:
+    https://stackoverflow.com/questions/21419404/setting-the-viewport-to-scale-to-fit-both-width-and-height 
+
+Quick html formatting in order to make it easier to follow:
     https://htmlformatter.com/
-For GIF generation
+
+GIF generation
     https://ezgif.com/maker
-For collapsible menus
+
+Collapsible menus
     https://www.w3schools.com/howto/howto_js_collapsible.asp
-For pop up windows
+
+Drop down menu
+    https://www.w3schools.com/howto/howto_js_dropdown.asp
+
+Pop up windows
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup
+
+Hovering popup
+    https://www.w3schools.com/css/css_tooltip.asp
+
 -->
 

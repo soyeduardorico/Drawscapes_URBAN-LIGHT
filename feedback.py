@@ -16,7 +16,7 @@ from matplotlib import pyplot as plt #used for debuggin purposes
 # Imports locally defined functions
 # ------------------------------------------------------------------------------------
 from database_management import line_data_from_database
-from basic_drawing_functions import site_area, pts_to_polylines, draw_paths, draw_paths_base, draw_base_large
+from basic_drawing_functions import site_area, pts_to_polylines, draw_paths, draw_paths_base
 from drawing_app_functions import massing_analysis
 from graph_form_image import path_graph
 import project_data as pdt
@@ -31,11 +31,11 @@ root_data = os.path.join(absFilePath,  'data')
 # ------------------------------------------------------------------------------------
 # Pastes an image in feedback form (wider temlpate)
 # ------------------------------------------------------------------------------------
-def generate_image_feeback (img, text, text_colour, base_file_name, file_name, user_id, title ):
+def generate_image_feeback (img, text, text_colour, text_size, base_file_name, file_name, user_id, title ):
     dim = (530,530)
     img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA) # resizes images
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    font_large = ImageFont.truetype(".fonts/arial.ttf", 80)
+    font_large = ImageFont.truetype(".fonts/arial.ttf", text_size)
     img_pil = Image.fromarray(img)
     base_image_pil = Image.open(base_file_name) # brings larger canvas
     draw = ImageDraw.Draw(base_image_pil)
@@ -92,6 +92,7 @@ def generate_feedback_images (data, databse_filepath, user_id, file_name):
     # feedback on canal proximity
     # ------------------------------------------------------------------------------------
     text_colour= (1,168,80)
+    text_size = 80
     if len (polylines_massing) > 1: # checks that there is actually data
         img=cv2.imread(pdt.feedback_canal_base)
         img=draw_paths_base (polylines_massing, linetype_massing, 'any', 'any', img, save='False')
@@ -100,16 +101,19 @@ def generate_feedback_images (data, databse_filepath, user_id, file_name):
             text = str(int(text*100))+'%'
         else:
             text = '0% (no towers)'
-        generate_image_feeback (img, text, text_colour, pdt.feedback_canal, file_name,user_id, '_feedback_canal.jpg' )
+            text_size = 30
+        generate_image_feeback (img, text, text_colour, text_size, pdt.feedback_canal, file_name,user_id, '_feedback_canal.jpg' )
     else:
         img= cv2.imread(pdt.draw_no_lines_drawn) # loads error file if no lines included
         text = '0% (no towers)'
-        generate_image_feeback (img, text, text_colour, pdt.feedback_canal, file_name, user_id, '_feedback_canal.jpg' )
+        text_size = 30
+        generate_image_feeback (img, text, text_colour, text_size, pdt.feedback_canal, file_name, user_id, '_feedback_canal.jpg' )
 
     # ------------------------------------------------------------------------------------
     # feedback on noise impact proximity
     # ------------------------------------------------------------------------------------
     text_colour= (230,0,170)
+    text_size = 80
     if len (polylines_massing) > 1:  # checks that there is actually data
         img=cv2.imread(pdt.feedback_noise_base)
         img=draw_paths_base (polylines_massing, linetype_massing, 'any', 'any', img, save='False')
@@ -118,15 +122,17 @@ def generate_feedback_images (data, databse_filepath, user_id, file_name):
             text = str(int(text*100))+'%'
         else:
             text = '0% (no towers)'
-        generate_image_feeback (img, text, text_colour, pdt.feedback_noise, file_name,user_id, '_feedback_noise.jpg' )
+            text_size = 30
+        generate_image_feeback (img, text, text_colour, text_size, pdt.feedback_noise, file_name,user_id, '_feedback_noise.jpg' )
     else:
         img= cv2.imread(pdt.draw_no_lines_drawn) # loads error file if no lines included
-        generate_image_feeback (img, text, text_colour, pdt.feedback_noise, file_name,user_id,'_feedback_noise.jpg' )
+        generate_image_feeback (img, text, text_colour, text_size, pdt.feedback_noise, file_name,user_id,'_feedback_noise.jpg' )
 
     # ------------------------------------------------------------------------------------
     # feedback on barrier effect counting connections to nodes that lead udner the bridge
     # ------------------------------------------------------------------------------------
     text_colour= (230,0,170)
+    text_size = 80
     if len (polylines_lines) > 1: # checks that there is actually data
         # generates image over base to develop feedback drawing
         img=cv2.imread(pdt.feedback_barrier_base)
@@ -139,10 +145,10 @@ def generate_feedback_images (data, databse_filepath, user_id, file_name):
         text = obtain_connections(img1) # sends drawing for calculation of number of conenctions
 
         text = '  ' +  str(text)
-        generate_image_feeback (img, text, text_colour, pdt.feedback_barrier, file_name,user_id, '_feedback_barrier.jpg' )
+        generate_image_feeback (img, text, text_colour, text_size, pdt.feedback_barrier, file_name,user_id, '_feedback_barrier.jpg' )
     else:
         img= cv2.imread(pdt.draw_no_lines_drawn) # loads error file if no lines included
-        generate_image_feeback (img, text, text_colour, pdt.feedback_barrier, file_name,user_id, '_feedback_barrier.jpg' )
+        generate_image_feeback (img, text, text_colour, text_size, pdt.feedback_barrier, file_name,user_id, '_feedback_barrier.jpg' )
 
 
 #%%

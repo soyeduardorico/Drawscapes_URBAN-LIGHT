@@ -5,6 +5,7 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>        
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
     <base target="_top">
@@ -89,12 +90,10 @@
     <p> <br> <br> <br> <br> </p>
 
     <div class="central-container">
-
-
         <p> <br> </p>
-        
 
             <p> </p>
+            
             <button id="back_to_lines" class="btn" style="width:462px" onclick="myBackToPaths();">
                 <h2> To ammend your PATHS <br> go back to step 2 </h2>
             </button>
@@ -113,11 +112,10 @@
 
 
 <script>
-    $(document).ready(function() {
-        $('html').css('background', color1);
-    });
-
-    document.getElementById("overlay").style.visibility = "hidden";
+    //--------------------------------------------------------------------------
+    // rescales content in screen to viewport in mobile devices
+    //-------------------------------------------------------------------------- 
+    AutoViewport.setDimensions(1450, 900);    
 
     //--------------------------------------------------------------------------
     //brings titles into header buttons
@@ -156,6 +154,12 @@
     //--------------------------------------------------------------------------
     // Sets up colors and buttons
     //--------------------------------------------------------------------------
+    $(document).ready(function() {
+        $('html').css('background', color1);
+    });
+
+    document.getElementById("overlay").style.visibility = "hidden";
+
     color_buttons_neutral() //turns all the rest of buttons to neutral color
     document.getElementById("btn7").style.background = color1; // colors 
    
@@ -196,42 +200,44 @@
     document.getElementById("feedback_3").src = feedback_3.src;
 
 
-    //--------------------------------------------------------------------------
-    //GO back to draw buttons and backend communication
-    //--------------------------------------------------------------------------
-    function myBackToPaths() {
-        color_buttons_neutral() //turns all the rest of buttons to neutral color
-        document.getElementById("btn2").style.background = color1; // colors button in stage color
-        window.location.replace("{{url_for ('drawscapes') }}")
-    }
-
-    function myBackToBuildings() {
-        document.getElementById("overlay").style.visibility = "visible";
-        document.getElementById("ldr").style.visibility = "visible";
-        $.ajax({
-            url: '/drawscapes_massing_base_databse',
-        }).done(function(result) {
-            image_feedback_link = result;
-            document.getElementById("overlay").style.visibility = "hidden";
-            document.getElementById("ldr").style.visibility = "hidden";
-            window.location.replace("{{url_for ('drawscapes_massing', filename='ADDSHARE') }}".replace("ADDSHARE", image_feedback_link));
-        })
-    }
 
 
-    function myBackToLandUse() {
-        document.getElementById("overlay").style.visibility = "visible";
-        document.getElementById("ldr").style.visibility = "visible";
-        $.ajax({
-            url: '/drawscapes_land_use_base_databse',
-        }).done(function(result) {
-            image_feedback_link = result;
-            document.getElementById("overlay").style.visibility = "hidden";
-            document.getElementById("ldr").style.visibility = "hidden";
-            window.location.replace("{{url_for ('drawscapes_land_use', filename='ADDSHARE') }}".replace("ADDSHARE", image_feedback_link));
-        })
-    }
 
+//--------------------------------------------------------------------------
+//GO back to draw buttons and backend communication
+//--------------------------------------------------------------------------
+function myBackToPaths() {
+    // color_buttons_neutral() //turns all the rest of buttons to neutral color
+    // document.getElementById("btn2").style.background = color1; // colors button in stage color
+    window.location.replace("{{url_for ('drawscapes') }}");
+}
+ 
+function myBackToBuildings() {
+    document.getElementById("overlay").style.visibility = "visible";
+    document.getElementById("ldr").style.visibility = "visible";
+    $.ajax({
+        url: '/drawscapes_massing_base_databse',
+    }).done(function(result) {
+        image_feedback_link = result;
+        document.getElementById("overlay").style.visibility = "hidden";
+        document.getElementById("ldr").style.visibility = "hidden";
+        window.location.replace("{{url_for ('drawscapes_massing', filename='ADDSHARE') }}".replace("ADDSHARE", image_feedback_link));
+    })
+}
+
+
+function myBackToLandUse() {
+    document.getElementById("overlay").style.visibility = "visible";
+    document.getElementById("ldr").style.visibility = "visible";
+    $.ajax({
+        url: '/drawscapes_land_use_base_databse',
+    }).done(function(result) {
+        image_feedback_link = result;
+        document.getElementById("overlay").style.visibility = "hidden";
+        document.getElementById("ldr").style.visibility = "hidden";
+        window.location.replace("{{url_for ('drawscapes_land_use', filename='ADDSHARE') }}".replace("ADDSHARE", image_feedback_link));
+    })
+}
 
 </script>
 

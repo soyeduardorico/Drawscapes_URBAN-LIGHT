@@ -17,6 +17,7 @@ from PIL import ImageDraw
 from matplotlib import pyplot as plt #used for debuggin purposes
 from tinydb import TinyDB, Query
 
+
 # ------------------------------------------------------------------------------------
 # Imports project variables
 # ------------------------------------------------------------------------------------
@@ -25,12 +26,13 @@ from project_data import ucl_east_image, databse_filepath, link_feedback_massing
 from project_data import shape_y, shape_x, thickness_lines, root_participation_directory
 from project_data import reference_directory_images, reference_directory, overall_results_directory
 from project_data import link_outcome_failure, link_outcome_success, node_coords, threshold_distance
-from project_data import node_coords_large, color_canvas_rgb, node_coords_detailed
+from project_data import color_canvas_rgb, node_coords_detailed
 from project_data import site_scale_factor, massing_height
 from project_data import ucl_east_development_area, ucl_east_student_population, ucl_east_research_area
 from project_data import ratio_accomodation_base, ratio_accomodation_plinth, ratio_accomodation_tower, m2accomodation_per_student
 from project_data import ratio_research_base, ratio_research_plinth, ratio_research_tower
 import project_data as pdt
+import massing_generation as mgn
 
 
 # ------------------------------------------------------------------------------------
@@ -38,33 +40,9 @@ import project_data as pdt
 # ------------------------------------------------------------------------------------
 from graph_form_image import path_graph
 from database_management import data_to_database, line_data_from_database, export_data
-from basic_drawing_functions import site_area, pts_to_polylines, draw_paths, draw_paths_base, draw_base_large
+from basic_drawing_functions import site_area, pts_to_polylines, draw_paths, draw_paths_base
 
-# -------------------------------------------------
-# scale data pre calculation
-# -------------------------------------------------
 
-#generates data for scaling drawing from normal scale to wider scale (translation and scale)
-#large scale drawing will be a smaller drawing since it shows a larger area of the city so scale_factor < 1
-translate_move= [(node_coords_large[0][0]-node_coords[0][0]),(node_coords_large[0][1]-node_coords[0][1])]
-
-max1=node_coords[0][0]
-min1=node_coords[0][0]
-for i in node_coords:
-    if i [0]< min1:
-        min1=i[0]
-    if i[0]>max1:
-        max1=i[0]
-
-max2=node_coords_large[0][0]
-min2=node_coords_large[0][0]
-for i in node_coords_large:
-    if i [0]< min2:
-        min2=i[0]
-    if i[0]>max2:
-        max2=i[0]
-
-scale_factor=(max2-min2)/(max1-min1)
 
 
 # -------------------------------------------------
@@ -84,7 +62,6 @@ canvas_y = report_grid_y*thumb_y + (report_grid_y-1)*padding
 # ------------------------------------------------------------------------------------
 absFilePath = os.path.dirname(__file__)
 root_data = os.path.join(absFilePath,  'data')
-
 
 
 # ------------------------------------------------------------------------------------
@@ -125,7 +102,6 @@ def drawscapes_draw_base (data, exercise, file_name, session_folder, folder_name
         base=cv2.imread(link_base_image_warning)
         b=os.path.join(session_folder,file_name +'_base'+'.jpg')
         cv2.imwrite(b,base)
-
 
 
 # ------------------------------------------------------------------------------------
@@ -232,25 +208,26 @@ def save_land_uses (data, session_folder, file_name, user_id):
         file_name = file_name + '_land_uses'
         img=draw_paths_base (polylines, linetype, session_folder, file_name, img, save='True')
 
+
 # ------------------------------------------------------------------------------------
 # Saves survey results
 # ------------------------------------------------------------------------------------
-def save_survey_results (data, session_folder, file_name, user_id):
+def save_survey_results (data, session_folder, file_name, user_id, title_id):
     # global database
     database = pdt.databse_filepath
     db = TinyDB(database)
     survey_query=Query()
-    #update / instert (upsert)
-    db.upsert( {'id': user_id, 'survey_results' : data}, survey_query.id == user_id) # inserts or udates
+    db.upsert( {'id': user_id, title_id : data}, survey_query.id == user_id) # inserts or updates
     db.close()
 
     #user database
     database = os.path.join(session_folder, user_id + '_database.json')
     db = TinyDB(database)
     survey_query=Query()
-    #update / instert (upsert)
-    db.upsert( {'id': file_name, 'survey_results' : data}, survey_query.id == file_name) # inserts or udates
+    db.upsert( {'id': file_name, title_id : data}, survey_query.id == file_name) # inserts or updates
     db.close()
+    
+    
 # ------------------------------------------------------------------------------------
 # develops pixel count on drawing going through the list of land thickness used in massing_analysis
 # ------------------------------------------------------------------------------------
@@ -263,6 +240,7 @@ def count_pixels (img):
         land_use.append(result)
         built_area = built_area + result
     return built_area, land_use
+
 
 # ------------------------------------------------------------------------------------
 # Develops massing calculations from drawn polylines
@@ -338,24 +316,42 @@ def drawscapes_feedback_massing (data, file_name, user_id):
         # generate new canvas
         canvas =Image.open(link_feedback_massing_base)
 
+        # paste massing3D drawing
+        massing_size = 70
+        massing_pil = mgn.massing_image (polylines, linetype, massing_size)
+
+        # removes white pixels from massing_pil
+        pixdata = massing_pil.load()
+        width, height = massing_pil.size
+        for y in range(height):
+            for x in range(width):
+                if pixdata[x, y] == (255, 255, 255, 255):
+                    pixdata[x, y] = (255, 255, 255, 0)
+        
+        canvas.paste(massing_pil,(35,50),massing_pil)
+
         # instantiates class for text. Uses larger text than other since information is lower
         font_small = ImageFont.truetype(".fonts/arial.ttf", 20)
         font_large = ImageFont.truetype(".fonts/arial.ttf", 60)
         draw = ImageDraw.Draw(canvas)
 
-        # General massing feedback
-        draw.text((217, 205),f"{ucl_east_development_area:,}" + ' m2',(157,195,230),font=font_large)
+        # Write area for UCL East
+        draw.text((217, 500),f"{ucl_east_development_area:,}" + ' m2',(157,195,230),font=font_large)
+
+        # Write area drawn
         draw_area = int(data_land_use[1])
-        draw.text((217, 380),f"{draw_area:,}" + ' m2',(157,195,230),font=font_large)
+        draw.text((20, 355),f"{draw_area:,}" + ' m2',(157,195,230),font=font_large)
+
+        # Write recommendation
         ratio_built = data_land_use[1] / ucl_east_development_area*100
-        if ratio_built > 150:
+        if ratio_built > 125:
              text1 = "You drew too much..... try reducing a bit to hit the target"
         else:
             if ratio_built < 75:
                 text1 = "You did not draw enough..... try adding a bit to hit the target"
             else:
-                text1 = "You drew something pretty close to the target!!!"
-        draw.text((100, 550),text1,(255,255,0),font=font_small)
+                text1 = "Your drawing is close enough to the target (within 25%)"
+        draw.text((100, 630),text1,(255,255,0),font=font_small)
 
         # saves file
         b=os.path.join(session_folder,file_name +'_massing'+'.jpg')
@@ -405,53 +401,46 @@ def generate_image (data, session_folder, file_name, folder_name):
     draw_skeleton_graphs(img, session_folder,file_name, folder_name)
 
 
-
-
-
 #%%
 
 # ------------------------------------------------------------------------------------
 # Tester
 # ------------------------------------------------------------------------------------
 
-
-
-# session_user =  '1576064564452'
-# millis = 1576064636649
-
-# root_data = root_participation_directory
-# session_folder=os.path.join(root_data, session_user)
-# folder_name = session_user
-# file_name= session_user + '_' + str(millis) + '_test'
-
-
-# filepath_np_massing = os.path.join(session_folder, session_user + '_massing.npy')
-# filepath_np_massing_type = os.path.join(session_folder, session_user + '_massing_type.npy')
-
-# ptexport=np.load(filepath_np_massing).astype(int)
-# points=ptexport.tolist()
-
-# line_type=np.load(filepath_np_massing_type).astype(int)
-
-# polylines  = pts_to_polylines(points, line_type)[0]
-# linetype = pts_to_polylines (points, line_type) [1]
-
-
-# #generates data
-
-# style_save = [4]
-# data=[]
-# data.append(style_save)
-# data.append(points[0])
-# data.append(points[1])
-# data.append(points[2])
-# data.append(line_type.tolist())
-
-# print(data)
-
-# user_id = session_user
-
-
-# drawscapes_feedback_massing (data, file_name, user_id)
+#session_user =  '1576064564452'
+#millis = 1576064584122
+#
+#root_data = root_participation_directory
+#session_folder=os.path.join(root_data, session_user)
+#folder_name = session_user
+#file_name= session_user + '_' + str(millis) + '_test'
+#
+#
+#filepath_np_massing = os.path.join(session_folder, session_user + '_massing.npy')
+#filepath_np_massing_type = os.path.join(session_folder, session_user + '_massing_type.npy')
+#
+#ptexport=np.load(filepath_np_massing).astype(int)
+#points=ptexport.tolist()
+#
+#line_type=np.load(filepath_np_massing_type).astype(int)
+#
+#polylines  = pts_to_polylines(points, line_type)[0]
+#linetype = pts_to_polylines (points, line_type) [1]
+#
+#
+##generates data
+#
+#style_save = [4]
+#data=[]
+#data.append(style_save)
+#data.append(points[0])
+#data.append(points[1])
+#data.append(points[2])
+#data.append(line_type.tolist())
+#
+#user_id = session_user
+#
+#
+#drawscapes_feedback_massing (data, file_name, user_id)
 
 

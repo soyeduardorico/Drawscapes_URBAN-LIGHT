@@ -26,16 +26,16 @@ h2 {
 }
 
 p {
-  color: black;
+  color: #c5d3e8;
   font-family: Calibri;
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
 }
+
 
 /*  --------------------------------------------------------------------  */
 /* Equal columns that floats next to each other */
 /*  --------------------------------------------------------------------  */
-
 * {
   box-sizing: border-box;
 }
@@ -65,6 +65,11 @@ p {
   cursor: pointer;
   color: white;   
 }
+
+ .column_below:hover {
+    opacity: .5;
+}
+
 
 /*  --------------------------------------------------------------------  */
 /*  Tabs appearing below  */
@@ -112,6 +117,7 @@ button {
     background-color: grey;
 }
 
+
 /*  --------------------------------------------------------------------  */
 /* container for centered elements */
 /*  --------------------------------------------------------------------  */
@@ -127,13 +133,16 @@ justify-content: center }
   clear: both;
 }
 
+/*  --------------------------------------------------------------------  */
 /* Closable button inside the container tab */
+/*  --------------------------------------------------------------------  */
 .closebtn {
   float: right;
   color: white;
   font-size: 35px;
   cursor: pointer;
 }
+
 
 /*  --------------------------------------------------------------------  */
 /* Loader element to show progress */
@@ -229,7 +238,7 @@ justify-content: center }
 
 
 /*  --------------------------------------------------------------------  */
-/*  definition for popup  */
+/*  definition for popup */
 /*  --------------------------------------------------------------------  */
 /* Popup container - can be anything you want */
 .popup {
@@ -291,6 +300,90 @@ justify-content: center }
 
 
 /*  --------------------------------------------------------------------  */
+/*  definition for popup when hovering  */
+/*  --------------------------------------------------------------------  */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 330px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 20%;
+  left: 20%;
+  margin-left: -60px;
+  
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 0.7;
+}
+
+
+
+/*  --------------------------------------------------------------------  */
+/*  definition for dropdown menu  */
+/*  --------------------------------------------------------------------  */
+
+.dropbtn {
+  width: 1400px;
+  position: relative;
+  margin: auto;
+  background-color: black;
+  color: white;
+  padding: 16px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: rgb(29, 41, 82);;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  width: 1400px;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+
+
+/*  --------------------------------------------------------------------  */
 /*  definition for slideshow  */
 /*  --------------------------------------------------------------------  */
 * {box-sizing: border-box}
@@ -300,7 +393,7 @@ body {font-family: Verdana, sans-serif; margin:0}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 700px;
+  max-width: 1400px;
   position: relative;
   margin: auto;
 }
@@ -319,6 +412,7 @@ body {font-family: Verdana, sans-serif; margin:0}
   transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
+  opacity: 0.0;
 }
 
 /* Position the "next button" to the right */
@@ -330,6 +424,7 @@ body {font-family: Verdana, sans-serif; margin:0}
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0.8,0.8,0.8,0.8);
+  opacity: 1;
 }
 
 /* Caption text */
