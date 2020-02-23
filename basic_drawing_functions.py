@@ -2,13 +2,16 @@ import numpy as np
 import cv2
 import os
 import skimage
-
+import matplotlib
+matplotlib.use('Agg')
 from skimage import morphology
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt #used for debuggin purposes
 
 # ------------------------------------------------------------------------------------
 # Imports project variables
-# ------------------------------------------------------------------------------------  
+# ------------------------------------------------------------------------------------
 from project_data import link_base_image, link_base_image_large_annotated, link_base_image_warning, ucl_east_image
 from project_data import shape_y, shape_x, thickness_lines, root_participation_directory
 from project_data import reference_directory_images, reference_directory, overall_results_directory
@@ -21,7 +24,7 @@ from project_data import ratio_research_base, ratio_research_plinth, ratio_resea
 
 # ------------------------------------------------------------------------------------
 # Imports locally defined functions
-# ------------------------------------------------------------------------------------  
+# ------------------------------------------------------------------------------------
 from graph_form_image import path_graph
 
 
@@ -35,8 +38,8 @@ def site_area():
     img= np.zeros((700,700,3), np.uint8)
     img.fill(255)
     # draws an outline with detailed nodes
-    pts=np.array(node_coords_detailed, np.int32)    
-    pts=pts.reshape((-1,1,2))    
+    pts=np.array(node_coords_detailed, np.int32)
+    pts=pts.reshape((-1,1,2))
     # fills site with black
     cv2.fillPoly(img,[pts],(0,0,0))
     img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -51,7 +54,7 @@ def site_area():
 # ------------------------------------------------------------------------------------
 # Generates a list of polylines given a list of points
 # ------------------------------------------------------------------------------------
-def pts_to_polylines (points, line_type): 
+def pts_to_polylines (points, line_type):
     polylines=[]
     line=[]
     linetypes = [] # lsit of type of line for thickness and color definition
@@ -95,7 +98,7 @@ def draw_paths_base (polylines, linetype, folder,file_name, img, save='True'):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR) # needs to invert colors first for the case of multiple line drawing. Does not affect individual ones which come greyscale
     for i in range(0, len(polylines)):
         thickness = thickness_lines[linetype[i]]
-        color = color_canvas_rgb[linetype[i]]        
+        color = color_canvas_rgb[linetype[i]]
         for j in range(0, int(len(polylines[i])-1)):
             cv2.line(img,(int(polylines[i][j][0]),int(shape_y-polylines[i][j][1])),(int(polylines[i][j+1][0]),int(shape_y-polylines[i][j+1][1])),color,thickness)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

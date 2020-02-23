@@ -3,16 +3,23 @@
 # For running flask on pythonanywhere  see: https://www.youtube.com/watch?v=M-QRwEEZ9-8
 # For session generation see https://www.youtube.com/watch?v=T1ZVyY1LWOg
 # For general tutorials on flask: https://www.youtube.com/watch?v=MwZwr5Tvyxo
+# For matplotlib: Use version 2.2.2 and add force not use x-windows as een in: link below
+# https://stackoverflow.com/questions/2801882/generating-a-png-with-matplotlib-when-display-is-undefined
 # ----------------------------------------------------------------------------------
 from flask import Flask, render_template, url_for, request, jsonify, send_from_directory, session, redirect, make_response, flash
 import time
 import os
 
-from tinydb import TinyDB
+# Force matplotlib to not use any Xwindows backend. Not sure what this is but see above
+# Needs to be before plt is called later on in the app
+import matplotlib
+matplotlib.use('Agg')
 
+from tinydb import TinyDB
 from drawing_app_functions import drawscapes_feedback_lines, drawscapes_feedback_massing
 from drawing_app_functions import drawscapes_draw_base_from_feedback, drawscapes_draw_base, save_land_uses, drawscapes_draw_base_for_land_use
 from feedback import generate_feedback_images
+
 import project_data as pdt
 import drawing_app_functions as daf
 import database_management as dbm
@@ -328,6 +335,7 @@ def drawscapes_save_land_uses():
 def drawscapes_save_initial_text():
     session_folder=os.path.join(root_data, session['user']) # uses same folder as folder session
     user_id= session['user']
+    millis = int(round(time.time() * 1000))
     file_name= user_id +'_'+ str(millis)
     file_path = os.path.join(session_folder, file_name + '.txt')
 
@@ -348,6 +356,7 @@ def drawscapes_save_initial_text():
 def drawscapes_save_text():
     session_folder=os.path.join(root_data, session['user']) # uses same folder as folder session
     user_id= session['user']
+    millis = int(round(time.time() * 1000))
     file_name= user_id +'_'+ str(millis)
     file_path = os.path.join(session_folder, file_name + '.txt')
 

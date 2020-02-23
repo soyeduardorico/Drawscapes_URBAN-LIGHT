@@ -11,7 +11,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url_for ('static', filename='drawscapes_scripts.js')}}"></script>
-    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>    
+    <script type="text/javascript" src="{{url_for ('static', filename='AutoViewport.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{url_for ('static', filename='drawscapes_styles.css')}}">
     <base target="_top">
@@ -47,8 +47,8 @@
         <span class="tooltiptext" style = "bottom: 50%; opacity:100%">
           <img id="imagezoom" style="width:97%"> </img>
           <br>
-          <br>  Click "Crtl" + scroll mouse to "zoom out" <br> 
-          <br>  or use the browser zoom controls <br> 
+          <br>  Click "Crtl" + scroll mouse to "zoom out" <br>
+          <br>  or use the browser zoom controls <br>
           <br>  until you can see the entire webpage <br>
     </div>
   </div>
@@ -98,7 +98,7 @@
 <br>
 
 <!-- DROPDOWN MENU -->
-<div  class="slideshow-container"> 
+<div  class="slideshow-container">
   <div class="dropdown">
     <button onclick="myDropdownFunction()" class="dropbtn">When ready CLICK HERE to indicate your faculty and move on</button>
     <div id="myDropdown"  class="dropdown-content">
@@ -160,7 +160,7 @@ element.innerHTML = title10;
 
 
 //--------------------------------------------------------------------------
-//sets basics colors 
+//sets basics colors
 //--------------------------------------------------------------------------
 $('html').css('background', color1); //sets background color
 
@@ -171,12 +171,12 @@ document.getElementById("btn1").style.background = color1; // colors button in s
 
 //--------------------------------------------------------------------------
 // rescales content in screen to viewport in mobile devices
-//-------------------------------------------------------------------------- 
-AutoViewport.setDimensions(1450, 900);    
-    
+//--------------------------------------------------------------------------
+AutoViewport.setDimensions(1450, 900);
+
 //--------------------------------------------------------------------------
 // Loads the images for the slideshow
-//-------------------------------------------------------------------------- 
+//--------------------------------------------------------------------------
 image1.src ="{{url_for ('static', filename='images/slideshow/Slide1.gif') }}"
 document.getElementById("image1").src = image1.src;
 
@@ -207,7 +207,7 @@ document.getElementById("image9").src = image9.src;
 image10.src ="{{url_for ('static', filename='images/slideshow/Slide10.JPG') }}"
 document.getElementById("image10").src = image10.src;
 
-imagezoom.src ="{{url_for ('static', filename='images/zoom.JPG') }}"
+imagezoom.src ="{{url_for ('static', filename='images/zoom.jpg') }}"
 document.getElementById("imagezoom").src = imagezoom.src;
 
 var slideIndex = 1;
@@ -230,18 +230,18 @@ function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
   var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = slides.length}   
+  if (n > slides.length) {slideIndex = slides.length}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
+      slides[i].style.display = "none";
   }
-  slides[slideIndex-1].style.display = "block";  
+  slides[slideIndex-1].style.display = "block";
 }
 
 
 //--------------------------------------------------------------------------
 // functionality for dropdown
-//-------------------------------------------------------------------------- 
+//--------------------------------------------------------------------------
 // When the user clicks on the button,toggle between hiding and showing the dropdown content */
 function myDropdownFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -263,8 +263,8 @@ window.onclick = function(event) {
 
 
 //--------------------------------------------------------------------------
-// Saves option and moves to next page 
-//-------------------------------------------------------------------------- 
+// Saves option and moves to next page
+//--------------------------------------------------------------------------
 function moveOn(faculty_name){
 
   var js_data = JSON.stringify(faculty_name);
@@ -283,8 +283,8 @@ function moveOn(faculty_name){
 
 
 //--------------------------------------------------------------------------
-// Saves option and moves to next page 
-//-------------------------------------------------------------------------- 
+// Saves option and moves to next page
+//--------------------------------------------------------------------------
 function moveOn2(){
 window.location.replace("{{url_for ('drawscapes') }}");
 }
@@ -294,4 +294,4 @@ window.location.replace("{{url_for ('drawscapes') }}");
 </script>
 
 </body>
-</html> 
+</html>
